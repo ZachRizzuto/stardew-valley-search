@@ -123,15 +123,27 @@ export const Topbar = ({
     <>
       <div className={`topbar ${isExtended && "topbar-down"}`}>
         <div className="topbar-nav-container">
-          <div className="nav-btns">
-            <button className="upload" id="fish-input"></button>
-          </div>
+          <div className="nav-btns"></div>
         </div>
         <form
           className="search-form-container"
           onSubmit={(e) => {
             e.preventDefault();
-            setAllFish(filteredFish.length > 0 ? filteredFish : allFish);
+            // May not be necessary because it doesn't get used
+            // setAllFish(filteredFish.length > 0 ? filteredFish : allFish);
+            if (fishQuery.slice(0, 7).toLowerCase().includes("season:")) {
+              const seasonInQuery = fishQuery
+                .slice(7, fishQuery.length - 1)
+                .toLowerCase();
+
+              const filteredSeasonFish = dataAllFish.filter((fish) =>
+                fish.season.toLowerCase().includes(seasonInQuery)
+              );
+              console.log(filteredSeasonFish);
+              filteredSeasonFish.length > 0
+                ? setAllFish(filteredSeasonFish)
+                : 0;
+            }
           }}
         >
           <button className="upload" type="submit">
@@ -158,6 +170,58 @@ export const Topbar = ({
             />
           </div>
         </form>
+        <div className="sort-buttons-container">
+          <button
+            title="Sort Descending Difficulty"
+            className="sort-button"
+            onClick={() => {
+              setAllFish(
+                [...allFish].sort(
+                  (a, b) => parseInt(b.difficulty) - parseInt(a.difficulty)
+                )
+              );
+            }}
+          ></button>
+          <button
+            title="Sort Ascending Difficulty"
+            className="sort-button"
+            onClick={() => {
+              setAllFish(
+                [...allFish].sort(
+                  (a, b) => parseInt(a.difficulty) - parseInt(b.difficulty)
+                )
+              );
+            }}
+          ></button>
+          <button
+            title="Sort Seasons"
+            className="sort-button"
+            onClick={() => {
+              setAllFish(
+                [...allFish].sort((a, b) => a.season.localeCompare(b.season))
+              );
+            }}
+          ></button>
+          <button
+            title="Sort Alphabetical"
+            className="sort-button"
+            id="sort-alph"
+            onClick={() => {
+              setAllFish(
+                [...allFish].sort((a, b) => a.name.localeCompare(b.name))
+              );
+            }}
+          ></button>
+          <button
+            title="Sort Reverse Alphabetical"
+            className="sort-button"
+            onClick={() => {
+              setAllFish(
+                [...allFish].sort((a, b) => b.name.localeCompare(a.name))
+              );
+            }}
+          ></button>
+        </div>
         <button
           className={`topbar-button ${
             isExtended && "rotate-y-180 topbar-button-down"

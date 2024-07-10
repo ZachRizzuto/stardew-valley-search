@@ -109,7 +109,6 @@ body {
   flex-direction: column;
   align-items: start;
   justify-content: center;
-  gap: 5px;
   padding: 5px;
 }
 
@@ -127,6 +126,28 @@ body {
   justify-content: start;
   align-items: center;
   width: 80%;
+}
+
+.sort-buttons-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.sort-button {
+  width: 30px;
+  height: 30px;
+  border: 2px solid white;
+  cursor: pointer;
+  background-color: inherit;
+}
+
+.sort-button img {
+  width: 100%;
+}
+
+#sort-alph {
+  background-image: url(/assets/SortAlph.png);
+  background-size: cover;
 }
 
 .topbar-down {
@@ -162,13 +183,12 @@ body {
   background-size:contain;
   background-color: inherit;
   border: none;
-  cursor: pointer;
   transition: all 150ms ease-in;
 }
 
-.upload:hover {
+/* .upload:hover {
   transform: scale(1.2)
-}
+} */
 
 #fish-input {
 background-image: url("../assets/images-removebg-preview.jpg");
